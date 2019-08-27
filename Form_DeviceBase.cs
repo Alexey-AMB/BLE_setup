@@ -20,7 +20,7 @@ namespace BLE_setup
         private readonly SynchronizationContext synchronizationContext;
 
         private int iCurrCommand = -1;
-        BLE_com bc;
+        
         private string sSelBleId = null;
 
         private void EnableButtons(bool bEn)
@@ -69,13 +69,12 @@ namespace BLE_setup
             iCurrCommand = -1;
         }
 
-        public Form_DeviceBase(BLE_com bIn, stMyBleDevice mbd)
+        public Form_DeviceBase(stMyBleDevice mbd)
         {
             InitializeComponent();
 
             synchronizationContext = SynchronizationContext.Current;
 
-            bc = bIn;
             sSelBleId = mbd.sBleId;            
             this.labelName.Text = "Имя: " + mbd.sName;
             this.labelBleMac.Text = "MAC: " + mbd.sBleMacAddr;
@@ -83,19 +82,25 @@ namespace BLE_setup
 
         private void Form_Device_Load(object sender, EventArgs e)
         {
-            bc.BuffChaged += Bc_BuffChanged;
-                        
+            BLE_com.BuffChaged += Bc_BuffChanged;
+
+            Int32 unixTimestamp = (Int32)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
+            byte[] buf = BitConverter.GetBytes(unixTimestamp);
+            SendCommand(InCommandBase.CMD_SET_TIME, buf);
+            //while (iCurrCommand > 0)
+                Thread.Sleep(1000);
+
             SendCommand(InCommandBase.CMD_GET_VERSION, null);
 
             //while (iCurrCommand > 0)
-                Thread.Sleep(1500);
+                Thread.Sleep(1000);
 
             SendCommand(InCommandBase.CMD_GET_AKKVOLTAGE, null);
         }
 
         private void Form_Device_FormClosing(object sender, FormClosingEventArgs e)
         {
-            bc.BuffChaged -= Bc_BuffChanged;
+            BLE_com.BuffChaged -= Bc_BuffChanged;
         }
 
         private async void SendCommand(InCommandBase cmd, byte[] databuf)
@@ -103,14 +108,14 @@ namespace BLE_setup
             iCurrCommand = (byte)cmd;
             if (databuf != null)
             {
-                bc.pBuffOut = databuf;
-                bc.iBuffOutLen = (UInt16)databuf.Length;
+                BLE_com.pBuffOut = databuf;
+                BLE_com.iBuffOutLen = (UInt16)databuf.Length;
 
-                 bc.SendCommand((byte)cmd, true);
+                BLE_com.SendCommand((byte)cmd, true);
             }
             else
             {
-                 bc.SendCommand((byte)cmd, false);
+                BLE_com.SendCommand((byte)cmd, false);
             }
         }
 
@@ -168,11 +173,17 @@ namespace BLE_setup
             if(dr == DialogResult.OK)
             {
                 //save settings
-                byte[] ar2 = bc.GetBytes(fs.returnSettings);
+                byte[] ar2 = BLE_com.GetBytes(fs.returnSettings);
                 SendCommand(InCommandBase.CMD_SET_SETTINGS, ar2);
             }
         }
 
-       
+        private void Button7_Click(object sender, EventArgs e)
+        {
+            Form_BaseKM fbkm = new Form_BaseKM();
+
+            fbkm.ShowDialog();
+            SendCommand(InCommandBase.CMD_MODE_ACTIVE, null);
+        }
     }
 }

@@ -38,6 +38,7 @@
             this.button6 = new System.Windows.Forms.Button();
             this.labelAkkVoltage = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
+            this.button7 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button4
@@ -136,11 +137,22 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
+            // button7
+            // 
+            this.button7.Location = new System.Drawing.Point(12, 253);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(119, 23);
+            this.button7.TabIndex = 19;
+            this.button7.Text = "Конт. метки";
+            this.button7.UseVisualStyleBackColor = true;
+            this.button7.Click += new System.EventHandler(this.Button7_Click);
+            // 
             // Form_DeviceBase
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(154, 283);
+            this.Controls.Add(this.button7);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.labelAkkVoltage);
             this.Controls.Add(this.button6);
@@ -175,5 +187,6 @@
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Label labelAkkVoltage;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button7;
     }
 }

@@ -46,6 +46,7 @@
             this.numericUpDownGainKm = new System.Windows.Forms.NumericUpDown();
             this.numericUpDownTimerKm = new System.Windows.Forms.NumericUpDown();
             this.textBoxKeyKM = new System.Windows.Forms.TextBox();
+            this.checkBoxLedInverse = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownNum)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTimeout)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPowerBle)).BeginInit();
@@ -127,7 +128,7 @@
             // 
             // buttonSave
             // 
-            this.buttonSave.Location = new System.Drawing.Point(134, 276);
+            this.buttonSave.Location = new System.Drawing.Point(134, 292);
             this.buttonSave.Name = "buttonSave";
             this.buttonSave.Size = new System.Drawing.Size(75, 23);
             this.buttonSave.TabIndex = 8;
@@ -137,7 +138,7 @@
             // 
             // buttonCancel
             // 
-            this.buttonCancel.Location = new System.Drawing.Point(233, 276);
+            this.buttonCancel.Location = new System.Drawing.Point(233, 292);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(75, 23);
             this.buttonCancel.TabIndex = 9;
@@ -272,11 +273,22 @@
             this.textBoxKeyKM.TabIndex = 18;
             this.textBoxKeyKM.Text = "FF FF FF FF FF FF";
             // 
+            // checkBoxLedInverse
+            // 
+            this.checkBoxLedInverse.AutoSize = true;
+            this.checkBoxLedInverse.Location = new System.Drawing.Point(186, 269);
+            this.checkBoxLedInverse.Name = "checkBoxLedInverse";
+            this.checkBoxLedInverse.Size = new System.Drawing.Size(100, 17);
+            this.checkBoxLedInverse.TabIndex = 19;
+            this.checkBoxLedInverse.Text = "Инверсия LED";
+            this.checkBoxLedInverse.UseVisualStyleBackColor = true;
+            // 
             // Form_SettingsBase
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(326, 306);
+            this.ClientSize = new System.Drawing.Size(326, 327);
+            this.Controls.Add(this.checkBoxLedInverse);
             this.Controls.Add(this.textBoxKeyKM);
             this.Controls.Add(this.numericUpDownTimerKm);
             this.Controls.Add(this.numericUpDownGainKm);
@@ -330,5 +342,6 @@
         private System.Windows.Forms.NumericUpDown numericUpDownGainKm;
         private System.Windows.Forms.NumericUpDown numericUpDownTimerKm;
         private System.Windows.Forms.TextBox textBoxKeyKM;
+        private System.Windows.Forms.CheckBox checkBoxLedInverse;
     }
 }

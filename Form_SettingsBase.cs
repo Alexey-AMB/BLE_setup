@@ -51,6 +51,7 @@ namespace BLE_setup
             int wt = (int)sbs.type_station;
             this.comboBoxType.SelectedIndex = wt;
             this.numericUpDownNum.Value = sbs.num_station;
+            if ((sbs.service1 & 0x01) == 1) this.checkBoxLedInverse.Checked = true;
         }
 
         private void Form_SettingsBase_Load(object sender, EventArgs e)
@@ -85,6 +86,7 @@ namespace BLE_setup
                 returnSettings.ar_secure_key[i] = Convert.ToByte(sKa[i], 16);
             }
             returnSettings.signature = 223;
+            if (this.checkBoxLedInverse.Checked) returnSettings.service1 = 1;
 
             this.DialogResult = DialogResult.OK;
             this.Close();

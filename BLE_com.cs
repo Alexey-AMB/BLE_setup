@@ -129,6 +129,9 @@ namespace BLE_setup
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 6)]
         public byte[] ar_secure_key;   //ключи шифрования для карточек
         public byte signature;          //сигнатура SIGNATURE_EPROM_SETTINGS
+        public byte service1;           //сервисные данные. бит 0 - инверсия лампочек (платы версии 0 вкл 0, платы версии 1 вкл 1);
+        public byte service2;           //сервисные данные. не используется
+        public byte service3;           //сервисные данные. не используется
     }
 
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
@@ -191,41 +194,38 @@ namespace BLE_setup
         public byte crc;
     }
 
-    public class BLE_com
+    public static class BLE_com
     {
-        public bool bUpdateList = false;
-        public object oLock = new object();
+        public static bool bUpdateList = false;
+        public static object oLock = new object();
         public const int SizeStCommand = 5;
 
         //private int iCurrCommand = 0;
         //private bool bIsOK = false;
-        private int iExpectedLen = 0;
-        private int iCurrCmd = 0;
-        private int iExpectedCrc = 0;
-        private int iRecivedLen = 0;
-        private int iSendedLen = 0;
-        private byte[] pBuffIn = null;
-        private int iBuffInLen = 0;
-        public byte[] pBuffOut = null;
-        public UInt16 iBuffOutLen = 0;
-        public byte cCmdNext = 8;
+        private static int iExpectedLen = 0;
+        private static int iCurrCmd = 0;
+        private static int iExpectedCrc = 0;
+        private static int iRecivedLen = 0;
+        private static int iSendedLen = 0;
+        private static byte[] pBuffIn = null;
+        private static int iBuffInLen = 0;
+        public static byte[] pBuffOut = null;
+        public static UInt16 iBuffOutLen = 0;
+        public static byte cCmdNext = 8;
 
         //==================================================================
         public delegate void HaveBuff(byte[] buff);
-        public event HaveBuff BuffChaged;
-        
-        public BLE_com()
-        {
-           
-        }
+        public static event HaveBuff BuffChaged;
+
+
         //==================================================================
-        public ObservableCollection<BluetoothLEDeviceDisplay> KnownDevices = new ObservableCollection<BluetoothLEDeviceDisplay>();
+        public static ObservableCollection<BluetoothLEDeviceDisplay> KnownDevices = new ObservableCollection<BluetoothLEDeviceDisplay>();
 
-        private List<DeviceInformation> UnknownDevices = new List<DeviceInformation>();
+        private static List<DeviceInformation> UnknownDevices = new List<DeviceInformation>();
 
-        public DeviceWatcher deviceWatcher;
+        public static DeviceWatcher deviceWatcher;
 
-        public void StartBleDeviceWatcher()
+        public static void StartBleDeviceWatcher()
         {
             // Additional properties we would like about the device.
             // Property strings are documented here https://msdn.microsoft.com/en-us/library/windows/desktop/ff521659(v=vs.85).aspx
@@ -258,7 +258,7 @@ namespace BLE_setup
             deviceWatcher.Start();
         }
 
-        public void StopBleDeviceWatcher()
+        public static void StopBleDeviceWatcher()
         {
             if (deviceWatcher != null)
             {
@@ -278,7 +278,7 @@ namespace BLE_setup
             UpdateList();
         }
 
-        private BluetoothLEDeviceDisplay FindBluetoothLEDeviceDisplay(string id)
+        private static BluetoothLEDeviceDisplay FindBluetoothLEDeviceDisplay(string id)
         {
             foreach (BluetoothLEDeviceDisplay bleDeviceDisplay in KnownDevices)
             {
@@ -290,7 +290,7 @@ namespace BLE_setup
             return null;
         }
 
-        private DeviceInformation FindUnknownDevices(string id)
+        private static DeviceInformation FindUnknownDevices(string id)
         {
             foreach (DeviceInformation bleDeviceInfo in UnknownDevices)
             {
@@ -302,7 +302,7 @@ namespace BLE_setup
             return null;
         }
 
-        private async void DeviceWatcher_Added(DeviceWatcher sender, DeviceInformation deviceInfo)
+        private static async void DeviceWatcher_Added(DeviceWatcher sender, DeviceInformation deviceInfo)
         {
             // We must update the collection on the UI thread because the collection is databound to a UI element.
             await Task.Run(() =>
@@ -335,7 +335,7 @@ namespace BLE_setup
             });
         }
 
-        private async void DeviceWatcher_Updated(DeviceWatcher sender, DeviceInformationUpdate deviceInfoUpdate)
+        private static async void DeviceWatcher_Updated(DeviceWatcher sender, DeviceInformationUpdate deviceInfoUpdate)
         {
             // We must update the collection on the UI thread because the collection is databound to a UI element.
             await Task.Run(() =>
@@ -372,7 +372,7 @@ namespace BLE_setup
             });
         }
 
-        private async void DeviceWatcher_Removed(DeviceWatcher sender, DeviceInformationUpdate deviceInfoUpdate)
+        private static async void DeviceWatcher_Removed(DeviceWatcher sender, DeviceInformationUpdate deviceInfoUpdate)
         {
             // We must update the collection on the UI thread because the collection is databound to a UI element.
             await Task.Run(() =>
@@ -403,7 +403,7 @@ namespace BLE_setup
             });
         }
 
-        private async void DeviceWatcher_EnumerationCompleted(DeviceWatcher sender, object e)
+        private static async void DeviceWatcher_EnumerationCompleted(DeviceWatcher sender, object e)
         {
             // We must update the collection on the UI thread because the collection is databound to a UI element.
             await Task.Run(() =>
@@ -424,7 +424,7 @@ namespace BLE_setup
             });
         }
 
-        private async void DeviceWatcher_Stopped(DeviceWatcher sender, object e)
+        private static async void DeviceWatcher_Stopped(DeviceWatcher sender, object e)
         {
             // We must update the collection on the UI thread because the collection is databound to a UI element.
             await Task.Run(() =>
@@ -437,7 +437,7 @@ namespace BLE_setup
             });
         }
 
-        private void UpdateList()
+        private static void UpdateList()
         {
             //synchronizationContext.Post(new SendOrPostCallback(o =>
             //{
@@ -449,18 +449,18 @@ namespace BLE_setup
 
         //==================================================================
 
-        private BluetoothLEDevice _selectedDevice = null;
+        private static BluetoothLEDevice _selectedDevice = null;
 
-        private List<BluetoothLEAttributeDisplay> _services = new List<BluetoothLEAttributeDisplay>();
-        private BluetoothLEAttributeDisplay _selectedService = null;
+        private static List<BluetoothLEAttributeDisplay> _services = new List<BluetoothLEAttributeDisplay>();
+        private static BluetoothLEAttributeDisplay _selectedService = null;
 
-        private List<BluetoothLEAttributeDisplay> _characteristics = new List<BluetoothLEAttributeDisplay>();
+        private static List<BluetoothLEAttributeDisplay> _characteristics = new List<BluetoothLEAttributeDisplay>();
         //static BluetoothLEAttributeDisplay _selectedCharacteristic = null;
 
-        private List<GattCharacteristic> _subscribers = new List<GattCharacteristic>();
-        private TimeSpan _timeout = TimeSpan.FromSeconds(3);
+        private static List<GattCharacteristic> _subscribers = new List<GattCharacteristic>();
+        private static TimeSpan _timeout = TimeSpan.FromSeconds(3);
 
-        private async Task<int> OpenDevice(string deviceName)
+        private static async Task<int> OpenDevice(string deviceName)
         {
             int retVal = 0;
             if (!string.IsNullOrEmpty(deviceName))
@@ -512,7 +512,7 @@ namespace BLE_setup
             return retVal;
         }
 
-        private void CloseDevice()
+        private static void CloseDevice()
         {
             // Remove all subscriptions
             if (_subscribers.Count > 0) Unsubscribe();
@@ -527,7 +527,7 @@ namespace BLE_setup
             _selectedDevice = null;
         }
 
-        private async void Unsubscribe()
+        private static async void Unsubscribe()
         {
             foreach (var sub in _subscribers)
             {
@@ -541,7 +541,7 @@ namespace BLE_setup
             _subscribers.Clear();
         }
 
-        private async void Characteristic_ValueChanged(GattCharacteristic sender, GattValueChangedEventArgs args)
+        private static async void Characteristic_ValueChanged(GattCharacteristic sender, GattValueChangedEventArgs args)
         {
             var newValue = FormatValue(args.CharacteristicValue, DataFormat.Hex);
 
@@ -555,7 +555,7 @@ namespace BLE_setup
              GetBuffer(data);
         }
 
-        async Task<int> SetService(string serviceName)
+        async static Task<int> SetService(string serviceName)
         {
             int retVal = 0;
             if (_selectedDevice != null)
@@ -631,7 +631,7 @@ namespace BLE_setup
             return retVal;
         }
 
-        async Task<int> WriteCharacteristic(string param, int iCa)
+        async static Task<int> WriteCharacteristic(string param, int iCa)
         {
             int retVal = 0;
             if (_selectedDevice != null)
@@ -666,7 +666,7 @@ namespace BLE_setup
             return retVal;
         }
 
-        async Task<int> WriteCharacteristic(IBuffer buffer, int iCa)
+        async static Task<int> WriteCharacteristic(IBuffer buffer, int iCa)
         {
             int retVal = 0;
             if (_selectedDevice != null)
@@ -695,7 +695,7 @@ namespace BLE_setup
             return retVal;
         }
 
-        async Task<int> SubscribeToCharacteristic(int iCa)
+        async static Task<int> SubscribeToCharacteristic(int iCa)
         {
             int retVal = 0;
 
@@ -797,7 +797,7 @@ namespace BLE_setup
 
         //==================================================================
 
-        private void GetBuffer(byte[] buf)
+        private static void GetBuffer(byte[] buf)
         {
             if ((iRecivedLen == 0) && (iExpectedLen == 0))
             {        //не принят еще не один блок
@@ -891,7 +891,7 @@ namespace BLE_setup
             }
         }
 
-        private byte GetCRC8(byte[] buf, UInt16 len)
+        private static byte GetCRC8(byte[] buf, UInt16 len)
         {
             byte crc = 0;
             for (int i = 0; i < len; i++)
@@ -905,7 +905,7 @@ namespace BLE_setup
         public  const byte SIGNATURE_COMMAND = 223;
         private const byte MYDATATRANSFER_MYBUFIN1_LEN = 23;
 
-        public /*async Task*/ void SendCommand(byte cmd, bool bHaveBuf)
+        public static /*async Task*/ void SendCommand(byte cmd, bool bHaveBuf)
         {
             stCommand cmdOut;
             byte[] buf = null;
@@ -973,7 +973,7 @@ namespace BLE_setup
             
         }
 
-        private async void ExecuteCommand(bool bHaveBuf)
+        private static async void ExecuteCommand(bool bHaveBuf)
         {
             switch (iCurrCmd)
             {
@@ -995,7 +995,7 @@ namespace BLE_setup
             iBuffInLen = 0;
         }
 
-        public byte[] GetBytes(SPORT_BASE_SETTINGS str)
+        public static byte[] GetBytes(SPORT_BASE_SETTINGS str)
         {
             int size = Marshal.SizeOf(str);
             byte[] arr = new byte[size];
@@ -1007,7 +1007,7 @@ namespace BLE_setup
             return arr;
         }
 
-        public byte[] GetBytes(stCommand str)
+        public static byte[] GetBytes(stCommand str)
         {
             int size = Marshal.SizeOf(str);
             byte[] arr = new byte[size];
@@ -1019,7 +1019,7 @@ namespace BLE_setup
             return arr;
         }
 
-        public byte[] GetBytes(SPORT_TAG_SETTINGS str)
+        public static byte[] GetBytes(SPORT_TAG_SETTINGS str)
         {
             int size = Marshal.SizeOf(str);
             byte[] arr = new byte[size];
@@ -1031,7 +1031,7 @@ namespace BLE_setup
             return arr;
         }
 
-        public async Task WriteToBleOneShot(string sSelID, byte[] bytes)
+        public static async Task WriteToBleOneShot(string sSelID, byte[] bytes)
         {
             string sSelServ = "Custom Service: f000ba33-0451-4000-b000-000000000000";
             var writer = new DataWriter();
@@ -1058,7 +1058,7 @@ namespace BLE_setup
             }
         }
 
-        public async Task<bool> OpenBle(string sSelID, MyTypeBleDevice type)
+        public static async Task<bool> OpenBle(string sSelID, MyTypeBleDevice type)
         {
             string sSelServ = null;
             if (type == MyTypeBleDevice.BASE) sSelServ = "Custom Service: f000ba33-0451-4000-b000-000000000000";
@@ -1086,7 +1086,7 @@ namespace BLE_setup
         }
 
 
-        private async Task WriteToBle(byte[] bytes)
+        private static async Task WriteToBle(byte[] bytes)
         {
             var writer = new DataWriter();
             writer.ByteOrder = ByteOrder.LittleEndian;
@@ -1106,15 +1106,15 @@ namespace BLE_setup
             }
         }
 
-        public void CloseBle()
+        public static void CloseBle()
         {
             CloseDevice();
         }
 
 
-        BluetoothLEAdvertisementWatcher _watcher = null;
+        static BluetoothLEAdvertisementWatcher _watcher = null;
 
-        public void StartDiscoveryAdv()
+        public static void StartDiscoveryAdv()
         {
             _watcher = new BluetoothLEAdvertisementWatcher();
             _watcher.ScanningMode = BluetoothLEScanningMode.Active;
@@ -1156,7 +1156,7 @@ namespace BLE_setup
             _watcher.Start();
         }
 
-        public void StopDiscoveryAdv()
+        public static void StopDiscoveryAdv()
         {
 
             _watcher.Stop();
@@ -1168,13 +1168,13 @@ namespace BLE_setup
             _watcher = null;
         }
 
-        public ConcurrentDictionary<string, stMyBleDevice> BleList = new ConcurrentDictionary<string, stMyBleDevice>();
-        public bool bBaseFound = true;
-        public bool bTagFound = true;
+        public static ConcurrentDictionary<string, stMyBleDevice> BleList = new ConcurrentDictionary<string, stMyBleDevice>();
+        public static bool bBaseFound = true;
+        public static bool bTagFound = true;
 
-       
 
-        private async void _watcher_Received(BluetoothLEAdvertisementWatcher sender, BluetoothLEAdvertisementReceivedEventArgs args)
+
+        private static async void _watcher_Received(BluetoothLEAdvertisementWatcher sender, BluetoothLEAdvertisementReceivedEventArgs args)
         {
             bool bIsBase = false;
             bool bIsTag = false;
@@ -1220,7 +1220,7 @@ namespace BLE_setup
             device = null;
         }
 
-        private void _watcher_Stopped(BluetoothLEAdvertisementWatcher sender, BluetoothLEAdvertisementWatcherStoppedEventArgs args)
+        private static void _watcher_Stopped(BluetoothLEAdvertisementWatcher sender, BluetoothLEAdvertisementWatcherStoppedEventArgs args)
         {
             string errorMsg = null;
             if (args != null)
@@ -1254,7 +1254,7 @@ namespace BLE_setup
 
         }
 
-        public  void wble(string sId)
+        public static void wble(string sId)
         {
             //var device = await BluetoothLEDevice.FromIdAsync(sId);
             ////Debug.WriteLine($"BLEWATCHER Found: {device.name}");

@@ -36,6 +36,15 @@
             this.labelName = new System.Windows.Forms.Label();
             this.button4 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.buttonZabegNext = new System.Windows.Forms.Button();
+            this.buttonZabegPrev = new System.Windows.Forms.Button();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.labelNumZabeg = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // labelAkkVoltage
@@ -114,11 +123,87 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(12, 188);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(119, 23);
+            this.button2.TabIndex = 26;
+            this.button2.Text = "Результаты";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.Button2_Click);
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.buttonZabegNext);
+            this.groupBox1.Controls.Add(this.buttonZabegPrev);
+            this.groupBox1.Controls.Add(this.dataGridView1);
+            this.groupBox1.Controls.Add(this.labelNumZabeg);
+            this.groupBox1.Controls.Add(this.label1);
+            this.groupBox1.Location = new System.Drawing.Point(154, 12);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(452, 397);
+            this.groupBox1.TabIndex = 27;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Результаты";
+            // 
+            // buttonZabegNext
+            // 
+            this.buttonZabegNext.Location = new System.Drawing.Point(365, 357);
+            this.buttonZabegNext.Name = "buttonZabegNext";
+            this.buttonZabegNext.Size = new System.Drawing.Size(75, 23);
+            this.buttonZabegNext.TabIndex = 4;
+            this.buttonZabegNext.Text = "Следующий";
+            this.buttonZabegNext.UseVisualStyleBackColor = true;
+            this.buttonZabegNext.Click += new System.EventHandler(this.ButtonZabegNext_Click);
+            // 
+            // buttonZabegPrev
+            // 
+            this.buttonZabegPrev.Location = new System.Drawing.Point(10, 357);
+            this.buttonZabegPrev.Name = "buttonZabegPrev";
+            this.buttonZabegPrev.Size = new System.Drawing.Size(75, 23);
+            this.buttonZabegPrev.TabIndex = 3;
+            this.buttonZabegPrev.Text = "Назад";
+            this.buttonZabegPrev.UseVisualStyleBackColor = true;
+            this.buttonZabegPrev.Click += new System.EventHandler(this.ButtonZabegPrev_Click);
+            // 
+            // dataGridView1
+            // 
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.AllowUserToDeleteRows = false;
+            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(10, 43);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.ReadOnly = true;
+            this.dataGridView1.Size = new System.Drawing.Size(430, 296);
+            this.dataGridView1.TabIndex = 2;
+            // 
+            // labelNumZabeg
+            // 
+            this.labelNumZabeg.AutoSize = true;
+            this.labelNumZabeg.Location = new System.Drawing.Point(65, 20);
+            this.labelNumZabeg.Name = "labelNumZabeg";
+            this.labelNumZabeg.Size = new System.Drawing.Size(25, 13);
+            this.labelNumZabeg.TabIndex = 1;
+            this.labelNumZabeg.Text = "???";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(7, 20);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(51, 13);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Забег №";
+            // 
             // Form_DeviceTag
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(154, 198);
+            this.ClientSize = new System.Drawing.Size(614, 421);
+            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.button2);
             this.Controls.Add(this.labelAkkVoltage);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.button3);
@@ -134,6 +219,9 @@
             this.Text = "Метка";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form_DeviceTag_FormClosing);
             this.Load += new System.EventHandler(this.Form_DeviceTag_Load);
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -149,5 +237,12 @@
         private System.Windows.Forms.Label labelName;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Button buttonZabegNext;
+        private System.Windows.Forms.Button buttonZabegPrev;
+        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.Label labelNumZabeg;
+        private System.Windows.Forms.Label label1;
     }
 }
