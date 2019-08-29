@@ -47,11 +47,14 @@
             this.numericUpDownTimerKm = new System.Windows.Forms.NumericUpDown();
             this.textBoxKeyKM = new System.Windows.Forms.TextBox();
             this.checkBoxLedInverse = new System.Windows.Forms.CheckBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.numericUpDownTimeWaitKM = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownNum)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTimeout)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPowerBle)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownGainKm)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTimerKm)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTimeWaitKM)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -128,7 +131,7 @@
             // 
             // buttonSave
             // 
-            this.buttonSave.Location = new System.Drawing.Point(134, 292);
+            this.buttonSave.Location = new System.Drawing.Point(133, 339);
             this.buttonSave.Name = "buttonSave";
             this.buttonSave.Size = new System.Drawing.Size(75, 23);
             this.buttonSave.TabIndex = 8;
@@ -138,7 +141,7 @@
             // 
             // buttonCancel
             // 
-            this.buttonCancel.Location = new System.Drawing.Point(233, 292);
+            this.buttonCancel.Location = new System.Drawing.Point(232, 339);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(75, 23);
             this.buttonCancel.TabIndex = 9;
@@ -283,11 +286,34 @@
             this.checkBoxLedInverse.Text = "Инверсия LED";
             this.checkBoxLedInverse.UseVisualStyleBackColor = true;
             // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(36, 302);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(145, 13);
+            this.label9.TabIndex = 20;
+            this.label9.Text = "Время ожидания карточки:";
+            // 
+            // numericUpDownTimeWaitKM
+            // 
+            this.numericUpDownTimeWaitKM.Location = new System.Drawing.Point(186, 300);
+            this.numericUpDownTimeWaitKM.Maximum = new decimal(new int[] {
+            30,
+            0,
+            0,
+            0});
+            this.numericUpDownTimeWaitKM.Name = "numericUpDownTimeWaitKM";
+            this.numericUpDownTimeWaitKM.Size = new System.Drawing.Size(120, 20);
+            this.numericUpDownTimeWaitKM.TabIndex = 21;
+            // 
             // Form_SettingsBase
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(326, 327);
+            this.ClientSize = new System.Drawing.Size(326, 374);
+            this.Controls.Add(this.numericUpDownTimeWaitKM);
+            this.Controls.Add(this.label9);
             this.Controls.Add(this.checkBoxLedInverse);
             this.Controls.Add(this.textBoxKeyKM);
             this.Controls.Add(this.numericUpDownTimerKm);
@@ -317,6 +343,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPowerBle)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownGainKm)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTimerKm)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTimeWaitKM)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -343,5 +370,7 @@
         private System.Windows.Forms.NumericUpDown numericUpDownTimerKm;
         private System.Windows.Forms.TextBox textBoxKeyKM;
         private System.Windows.Forms.CheckBox checkBoxLedInverse;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.NumericUpDown numericUpDownTimeWaitKM;
     }
 }

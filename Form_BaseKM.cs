@@ -35,7 +35,7 @@ namespace BLE_setup
 
         private void Bc_BuffChanged(byte[] pBuffIn)
         {
-            if (pBuffIn == null) return;
+            //if (pBuffIn == null) return;
 
             switch (iCurrCommand)
             {
@@ -61,14 +61,14 @@ namespace BLE_setup
                     
                     synchronizationContext.Post(new SendOrPostCallback(o =>
                     {
-                        this.label1.Text = "OK.";
+                        //this.label1.Text = "OK.";
                     }), null);
                     break;
                 case (int)InCommandBase.CMD_WRITE_CARD_NUM:
 
                     synchronizationContext.Post(new SendOrPostCallback(o =>
                     {
-                        this.label2.Text = "OK.";
+                        //this.label2.Text = "OK.";
                     }), null);
                     break;
                 case (int)InCommandBase.CMD_READ_CARD:
@@ -80,10 +80,22 @@ namespace BLE_setup
                 default:
                     break;
             }
+            synchronizationContext.Post(new SendOrPostCallback(o =>
+            {
+                this.label3.Text = "OK.";
+            }), null);
 
             iCurrCommand = -1;
         }
-               
+
+        private void BLE_com_BuffError()
+        {
+            synchronizationContext.Post(new SendOrPostCallback(o =>
+            {
+                this.label3.Text = "ERROR!";
+            }), null);
+        }
+
         public Form_BaseKM()
         {
             InitializeComponent();
@@ -94,11 +106,13 @@ namespace BLE_setup
         private void Form_BaseKM_Load(object sender, EventArgs e)
         {
             BLE_com.BuffChaged += Bc_BuffChanged;
+            BLE_com.BuffError += BLE_com_BuffError;
         }
-
+        
         private void Form_BaseKM_FormClosing(object sender, FormClosingEventArgs e)
         {
             BLE_com.BuffChaged -= Bc_BuffChanged;
+            BLE_com.BuffError -= BLE_com_BuffError;
         }
 
         private void Button1_Click(object sender, EventArgs e)
@@ -129,12 +143,17 @@ namespace BLE_setup
 
         private void ShowKMResult(byte[] res)
         {
-            int iIndex = 0;
-            int iStartBlockTime = BitConverter.ToInt32(res, iIndex);
+            int iIndex = 4;
+            byte[] qBaseTime = new byte[4];
+            qBaseTime[3] = res[4];
+            qBaseTime[2] = res[5];
+            qBaseTime[1] = res[6];
+            qBaseTime[0] = res[7];
+            int iStartBlockTime = BitConverter.ToInt32(qBaseTime, 0);
             int ut01012019 = (int)(new DateTime(2019, 1, 1) - new DateTime(1970, 1, 1)).TotalSeconds;
 
             DateTime tStartBlockTime = (new DateTime(1970, 1, 1, 0, 0, 0, 0)).AddSeconds(iStartBlockTime);
-
+                        
             //
             DataSet ds = new DataSet();
             DataTable dt;
@@ -163,10 +182,10 @@ namespace BLE_setup
                     iIndex += 4;
 
                     iNumbase = (int)res[iIndex];
-                    if (iNumbase == 0) break;
+                    if (iNumbase == 0) continue;
 
                     byte[] aBaseTime = new byte[4];
-                    aBaseTime[3] = res[3];
+                    aBaseTime[3] = res[4];
                     aBaseTime[2] = res[iIndex + 1];
                     aBaseTime[1] = res[iIndex + 2];
                     aBaseTime[0] = res[iIndex + 3];
@@ -185,7 +204,7 @@ namespace BLE_setup
                     dt.Rows.Add(dr);
                     tBaseTimePrev = tBaseTime;
 
-                } while (iIndex < res.Length);
+                } while (iIndex < res.Length - 4);
                 ds.Tables.Add(dt);
 
                 this.dataGridView1.Visible = true;
@@ -199,7 +218,7 @@ namespace BLE_setup
                 //Блок не читается
                 this.dataGridView1.Visible = false;
             }
-            //this.labelNumZabeg.Text = nblk[0].ToString();
+            this.labelKmNumber.Text = "Карта № " + res[0].ToString();
             //EnableButtonsZabeg(true);
         }
 

@@ -52,6 +52,7 @@ namespace BLE_setup
             this.comboBoxType.SelectedIndex = wt;
             this.numericUpDownNum.Value = sbs.num_station;
             if ((sbs.service1 & 0x01) == 1) this.checkBoxLedInverse.Checked = true;
+            this.numericUpDownTimeWaitKM.Value = sbs.service2;
         }
 
         private void Form_SettingsBase_Load(object sender, EventArgs e)
@@ -70,6 +71,7 @@ namespace BLE_setup
             returnSettings.powerble_station = (byte)this.numericUpDownPowerBle.Value;
             returnSettings.timeut_station = (UInt32)this.numericUpDownTimeout.Value;
             returnSettings.timer_KM = (UInt32)this.numericUpDownTimerKm.Value;
+            returnSettings.service2 = (byte)this.numericUpDownTimeWaitKM.Value;
             returnSettings.password_station = new byte[10];
             Array.Copy(Encoding.Default.GetBytes(this.textBoxPassword.Text), returnSettings.password_station, this.textBoxPassword.Text.Length);
 

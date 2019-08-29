@@ -217,6 +217,8 @@ namespace BLE_setup
         public delegate void HaveBuff(byte[] buff);
         public static event HaveBuff BuffChaged;
 
+        public delegate void HaveError();
+        public static event HaveError BuffError;
 
         //==================================================================
         public static ObservableCollection<BluetoothLEDeviceDisplay> KnownDevices = new ObservableCollection<BluetoothLEDeviceDisplay>();
@@ -983,6 +985,9 @@ namespace BLE_setup
                     //break;
                 case ((int)OutAsk.ASK_OK):
                     if(BuffChaged != null) BuffChaged(pBuffIn);
+                    break;
+                case ((int)OutAsk.ASK_ERROR):
+                    BuffError();
                     break;
             }
 
