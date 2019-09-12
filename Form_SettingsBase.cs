@@ -52,6 +52,7 @@ namespace BLE_setup
             this.comboBoxType.SelectedIndex = wt;
             this.numericUpDownNum.Value = sbs.num_station;
             if ((sbs.service1 & 0x01) == 1) this.checkBoxLedInverse.Checked = true;
+            if (sbs.service2 > 99) sbs.service2 = 99;
             this.numericUpDownTimeWaitKM.Value = sbs.service2;
         }
 

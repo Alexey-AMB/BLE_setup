@@ -122,7 +122,7 @@ namespace BLE_setup
             this.timer1.Enabled = true;
             lock (BLE_com.oLock)
             {
-                BLE_com.BleList.Clear();
+                if(this.checkBoxClearList.Checked) BLE_com.BleList.Clear();
                 BLE_com.bUpdateList = true;
             }
             //bc.StartDiscoveryAdv();

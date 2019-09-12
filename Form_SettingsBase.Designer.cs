@@ -203,7 +203,7 @@
             this.numericUpDownTimeout.Size = new System.Drawing.Size(120, 20);
             this.numericUpDownTimeout.TabIndex = 13;
             this.numericUpDownTimeout.Value = new decimal(new int[] {
-            60,
+            21600,
             0,
             0,
             0});
@@ -298,11 +298,6 @@
             // numericUpDownTimeWaitKM
             // 
             this.numericUpDownTimeWaitKM.Location = new System.Drawing.Point(186, 300);
-            this.numericUpDownTimeWaitKM.Maximum = new decimal(new int[] {
-            30,
-            0,
-            0,
-            0});
             this.numericUpDownTimeWaitKM.Name = "numericUpDownTimeWaitKM";
             this.numericUpDownTimeWaitKM.Size = new System.Drawing.Size(120, 20);
             this.numericUpDownTimeWaitKM.TabIndex = 21;

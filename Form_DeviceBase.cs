@@ -33,7 +33,7 @@ namespace BLE_setup
 
         private void Bc_BuffChanged(byte[] pBuffIn)
         {
-            if (pBuffIn == null) return;
+            //if (pBuffIn == null) return;
 
             switch (iCurrCommand)
             {
@@ -87,13 +87,13 @@ namespace BLE_setup
             Int32 unixTimestamp = (Int32)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
             byte[] buf = BitConverter.GetBytes(unixTimestamp);
             SendCommand(InCommandBase.CMD_SET_TIME, buf);
-            //while (iCurrCommand > 0)
-                Thread.Sleep(1000);
+            while (iCurrCommand > 0)
+                Thread.Sleep(100);
 
             SendCommand(InCommandBase.CMD_GET_VERSION, null);
 
-            //while (iCurrCommand > 0)
-                Thread.Sleep(1000);
+            while (iCurrCommand > 0)
+                Thread.Sleep(100);
 
             SendCommand(InCommandBase.CMD_GET_AKKVOLTAGE, null);
         }

@@ -33,6 +33,7 @@
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.checkBoxBase = new System.Windows.Forms.CheckBox();
             this.checkBoxTag = new System.Windows.Forms.CheckBox();
+            this.checkBoxClearList = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // listBox1
@@ -78,11 +79,22 @@
             this.checkBoxTag.UseVisualStyleBackColor = true;
             this.checkBoxTag.CheckedChanged += new System.EventHandler(this.checkBoxBase_CheckedChanged);
             // 
+            // checkBoxClearList
+            // 
+            this.checkBoxClearList.AutoSize = true;
+            this.checkBoxClearList.Location = new System.Drawing.Point(13, 272);
+            this.checkBoxClearList.Name = "checkBoxClearList";
+            this.checkBoxClearList.Size = new System.Drawing.Size(144, 17);
+            this.checkBoxClearList.TabIndex = 3;
+            this.checkBoxClearList.Text = "Очищать при закрытии";
+            this.checkBoxClearList.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(260, 287);
+            this.Controls.Add(this.checkBoxClearList);
             this.Controls.Add(this.checkBoxTag);
             this.Controls.Add(this.checkBoxBase);
             this.Controls.Add(this.listBox1);
@@ -103,6 +115,7 @@
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.CheckBox checkBoxBase;
         private System.Windows.Forms.CheckBox checkBoxTag;
+        private System.Windows.Forms.CheckBox checkBoxClearList;
     }
 }
 
