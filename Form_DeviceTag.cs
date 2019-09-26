@@ -79,7 +79,7 @@ namespace BLE_setup
             InitializeComponent();
 
             this.Width = 160;
-            this.Height = 260;
+            this.Height = 290;
 
             synchronizationContext = SynchronizationContext.Current;
 
@@ -151,6 +151,13 @@ namespace BLE_setup
             this.Close();
         }
 
+        private void Button6_Click(object sender, EventArgs e)
+        {
+            EnableButtons(false);
+            SendCommand(InCommandTag.CMD_SET_MODE_SLEEP, null);
+            EnableButtons(true);
+        }
+
         private void ShowTagSettings(SPORT_TAG_SETTINGS s)
         {
             Form_SettingsTag fs = new Form_SettingsTag(s);
@@ -200,6 +207,8 @@ namespace BLE_setup
             SendCommand(InCommandTag.CMD_READ_DATA, nblk);
         }
 
+
+        DataTable dt;
         private void ShowTagResult(byte[] res)
         {
             int iIndex = 0;
@@ -210,7 +219,7 @@ namespace BLE_setup
 
             //
             DataSet ds = new DataSet();
-            DataTable dt;
+            
             DataRow dr;
             DataColumn Numbase;
             DataColumn TimeBase;
@@ -287,9 +296,33 @@ namespace BLE_setup
             {
                 this.buttonZabegNext.Enabled = true;
                 this.buttonZabegPrev.Enabled = true;
+                this.buttonSave.Enabled = true;
 
                 if (nblk[0] < 3) this.buttonZabegPrev.Enabled = false;
                 if(nblk[0] > 13) this.buttonZabegNext.Enabled = false;
+            }
+        }
+
+        private void ButtonSave_Click(object sender, EventArgs e)
+        {
+            ExportDgvToXML(dt);
+        }
+
+        private void ExportDgvToXML(DataTable dt)
+        {            
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.Filter = "XML|*.xml";
+            sfd.FileName = mbd.sBleMacAddr + "_" + mbd.sName.Trim(' ')+ "_Забег_" + nblk[0].ToString();
+            if (sfd.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    dt.WriteXml(sfd.FileName);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
+                }
             }
         }
     }

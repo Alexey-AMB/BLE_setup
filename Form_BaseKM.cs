@@ -61,14 +61,14 @@ namespace BLE_setup
                     
                     synchronizationContext.Post(new SendOrPostCallback(o =>
                     {
-                        //this.label1.Text = "OK.";
+                        this.label1.Text = "OK.";
                     }), null);
                     break;
                 case (int)InCommandBase.CMD_WRITE_CARD_NUM:
 
                     synchronizationContext.Post(new SendOrPostCallback(o =>
                     {
-                        //this.label2.Text = "OK.";
+                        this.label2.Text = "OK.";
                     }), null);
                     break;
                 case (int)InCommandBase.CMD_READ_CARD:
@@ -115,12 +115,12 @@ namespace BLE_setup
             BLE_com.BuffError -= BLE_com_BuffError;
         }
 
-        private void Button1_Click(object sender, EventArgs e)
+        private void Button1_Click(object sender, EventArgs e)  //очистить
         {
             SendCommand(InCommandBase.CMD_CLEAR_CARD, null);
         }
 
-        private void Button2_Click(object sender, EventArgs e)
+        private void Button2_Click(object sender, EventArgs e)  //записать номер
         {
             //  DF 0C 04 00 24 23 01 00 00	- write num card
             //  DF 0C 04 00 FE 00 FF FF 00	- write master card sleep
@@ -128,12 +128,12 @@ namespace BLE_setup
             SendCommand(InCommandBase.CMD_WRITE_CARD_NUM, nblk);
         }
 
-        private void Button3_Click(object sender, EventArgs e)
+        private void Button3_Click(object sender, EventArgs e)  //считать
         {
             SendCommand(InCommandBase.CMD_READ_CARD, null);
         }
 
-        private void Button4_Click(object sender, EventArgs e)
+        private void Button4_Click(object sender, EventArgs e)  //записать мастер ключ сон
         {
             byte[] nblk = BitConverter.GetBytes((Int32)16776960);
             SendCommand(InCommandBase.CMD_WRITE_CARD_NUM, nblk);

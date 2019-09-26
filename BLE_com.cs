@@ -184,6 +184,9 @@ namespace BLE_setup
         public string sBleMacAddr;
         public MyTypeBleDevice type;
         public ulong uBleAddr;
+        public bool bIsActive;
+        public bool bIsTime;
+        public bool bIsAkk;
     }
 
     public struct stCommand
@@ -219,6 +222,9 @@ namespace BLE_setup
 
         public delegate void HaveError();
         public static event HaveError BuffError;
+
+        public delegate void HaveUpdateList();
+        public static event HaveUpdateList RefreshList;
 
         //==================================================================
         public static ObservableCollection<BluetoothLEDeviceDisplay> KnownDevices = new ObservableCollection<BluetoothLEDeviceDisplay>();
@@ -1195,7 +1201,7 @@ namespace BLE_setup
                     if (s.ToString() == "0000ba33-0000-1000-8000-00805f9b34fb") bIsBase = true;
                     if (s.ToString() == "0000ba43-0000-1000-8000-00805f9b34fb") bIsTag = true;
                 }
-                 
+
                 if ((bIsBase && bBaseFound) || (bIsTag && bTagFound))
                 {
                     lock (oLock)
@@ -1209,14 +1215,54 @@ namespace BLE_setup
                             mbd.uBleAddr = device.BluetoothAddress;
                             if (bIsBase) mbd.type = MyTypeBleDevice.BASE;
                             if (bIsTag) mbd.type = MyTypeBleDevice.TAG;
+
+                            
+                            if (bIsBase)
+                            {
+                                var dataSections = args.Advertisement.DataSections;
+                                var sectionData = dataSections[2];
+                                byte[] data = new byte[sectionData.Data.Length];
+                                using (var reader = DataReader.FromBuffer(sectionData.Data))
+                                {
+                                    reader.ReadBytes(data);
+                                }
+
+                                byte[] patternA = new byte[3] { Convert.ToByte('A'), Convert.ToByte('S'), Convert.ToByte('E') };
+                                byte[] patternS = new byte[3] { Convert.ToByte('a'), Convert.ToByte('s'), Convert.ToByte('e') };
+                                if (IndexOf(data, patternA) >= 0) mbd.bIsActive = true;
+
+                                int istartLen = -1;
+                                if (IndexOf(data, patternA) >= 0) istartLen = IndexOf(data, patternA) + 6;
+                                if (IndexOf(data, patternS) >= 0) istartLen = IndexOf(data, patternS) + 6;
+
+                                Int32 baseTime = 0;
+                                if (istartLen > 0)
+                                {
+                                    baseTime = BitConverter.ToInt32(data, istartLen);
+                                }
+
+                                Int32 unixTimestampNow = (Int32)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
+
+                                if (Math.Abs(baseTime - unixTimestampNow) < 10) mbd.bIsTime = true;
+
+                                //string DataString;
+                                //if (data.Length > 9)
+                                //{
+                                //    DataString = Encoding.ASCII.GetString(data, 0, data.Length);
+                                //}
+                            }
+
+                            mbd.bIsAkk = true;
+
                             BleList.GetOrAdd(device.DeviceId, mbd);
                             bUpdateList = true;
                         }
                     }
+                    //RefreshList();
                 }
-                
             }
-            catch { }
+            catch (Exception ex)
+            { }
 
             finally
             {
@@ -1294,6 +1340,21 @@ namespace BLE_setup
             //device = null;
         }
 
+        private static int IndexOf(byte[] input, byte[] pattern)
+        {
+            byte firstByte = pattern[0];
+            int index = -1;
 
+            if ((index = Array.IndexOf(input, firstByte)) >= 0)
+            {
+                for (int i = 0; i < pattern.Length; i++)
+                {
+                    if (index + i >= input.Length ||
+                     pattern[i] != input[index + i]) return -1;
+                }
+            }
+
+            return index;
+        }
     }
 }

@@ -43,6 +43,8 @@
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.labelNumZabeg = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.button6 = new System.Windows.Forms.Button();
+            this.buttonSave = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -125,7 +127,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(12, 188);
+            this.button2.Location = new System.Drawing.Point(12, 217);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(119, 23);
             this.button2.TabIndex = 26;
@@ -135,6 +137,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.buttonSave);
             this.groupBox1.Controls.Add(this.buttonZabegNext);
             this.groupBox1.Controls.Add(this.buttonZabegPrev);
             this.groupBox1.Controls.Add(this.dataGridView1);
@@ -197,11 +200,33 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Забег №";
             // 
+            // button6
+            // 
+            this.button6.Location = new System.Drawing.Point(12, 188);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(119, 23);
+            this.button6.TabIndex = 28;
+            this.button6.Text = "Режим СОН";
+            this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.Button6_Click);
+            // 
+            // buttonSave
+            // 
+            this.buttonSave.Enabled = false;
+            this.buttonSave.Location = new System.Drawing.Point(353, 14);
+            this.buttonSave.Name = "buttonSave";
+            this.buttonSave.Size = new System.Drawing.Size(87, 23);
+            this.buttonSave.TabIndex = 5;
+            this.buttonSave.Text = "Сохранить";
+            this.buttonSave.UseVisualStyleBackColor = true;
+            this.buttonSave.Click += new System.EventHandler(this.ButtonSave_Click);
+            // 
             // Form_DeviceTag
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(614, 421);
+            this.Controls.Add(this.button6);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.labelAkkVoltage);
@@ -244,5 +269,7 @@
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Label labelNumZabeg;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.Button buttonSave;
     }
 }

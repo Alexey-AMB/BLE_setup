@@ -28,6 +28,7 @@ namespace BLE_setup
             this.textBoxOtch.Text = Encoding.Default.GetString(sts.otch);
             this.numericUpDownGodRojd.Value = CheckNUDvalue((int)sts.godrojd, this.numericUpDownGodRojd);
             this.textBoxColectiv.Text = Encoding.Default.GetString(sts.colectiv);
+            if (sts.arenda > 0) this.checkBoxClub.Checked = true;
         }
 
         private void Form_SettingsTag_Load(object sender, EventArgs e)
@@ -66,6 +67,9 @@ namespace BLE_setup
             returnSettings.colectiv = new byte[20];
             Array.Copy(Encoding.Default.GetBytes(this.textBoxColectiv.Text), returnSettings.colectiv, this.textBoxColectiv.Text.Length);
 
+            if(this.checkBoxClub.Checked) returnSettings.arenda = 1;
+            else returnSettings.arenda = 0;
+
             returnSettings.mode_tag = WORKMODE_TAG.MODE_CONNECT;
             returnSettings.powerble_tag = 5;
             returnSettings.group = new byte[4];
@@ -74,7 +78,7 @@ namespace BLE_setup
             returnSettings.startnum = 0;
             returnSettings.starttime = new byte[7];
             returnSettings.lgota = 0;
-            returnSettings.arenda = 0;
+            
             returnSettings.signature = 223;
 
             this.DialogResult = DialogResult.OK;

@@ -49,6 +49,7 @@
             this.label5 = new System.Windows.Forms.Label();
             this.buttonSave = new System.Windows.Forms.Button();
             this.buttonCancel = new System.Windows.Forms.Button();
+            this.checkBoxClub = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTimeOut)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTreshold)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -153,6 +154,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.checkBoxClub);
             this.groupBox1.Controls.Add(this.textBoxColectiv);
             this.groupBox1.Controls.Add(this.label9);
             this.groupBox1.Controls.Add(this.numericUpDownGodRojd);
@@ -165,14 +167,14 @@
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Location = new System.Drawing.Point(6, 110);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(240, 174);
+            this.groupBox1.Size = new System.Drawing.Size(240, 189);
             this.groupBox1.TabIndex = 8;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Пользователь";
             // 
             // textBoxColectiv
             // 
-            this.textBoxColectiv.Location = new System.Drawing.Point(124, 139);
+            this.textBoxColectiv.Location = new System.Drawing.Point(124, 163);
             this.textBoxColectiv.MaxLength = 20;
             this.textBoxColectiv.Name = "textBoxColectiv";
             this.textBoxColectiv.Size = new System.Drawing.Size(100, 20);
@@ -181,7 +183,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(57, 142);
+            this.label9.Location = new System.Drawing.Point(57, 166);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(61, 13);
             this.label9.TabIndex = 8;
@@ -189,7 +191,7 @@
             // 
             // numericUpDownGodRojd
             // 
-            this.numericUpDownGodRojd.Location = new System.Drawing.Point(124, 113);
+            this.numericUpDownGodRojd.Location = new System.Drawing.Point(124, 137);
             this.numericUpDownGodRojd.Maximum = new decimal(new int[] {
             2200,
             0,
@@ -212,7 +214,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(40, 115);
+            this.label8.Location = new System.Drawing.Point(40, 139);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(78, 13);
             this.label8.TabIndex = 6;
@@ -220,7 +222,7 @@
             // 
             // textBoxOtch
             // 
-            this.textBoxOtch.Location = new System.Drawing.Point(124, 82);
+            this.textBoxOtch.Location = new System.Drawing.Point(124, 106);
             this.textBoxOtch.MaxLength = 20;
             this.textBoxOtch.Name = "textBoxOtch";
             this.textBoxOtch.Size = new System.Drawing.Size(100, 20);
@@ -229,7 +231,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(64, 85);
+            this.label7.Location = new System.Drawing.Point(64, 109);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(54, 13);
             this.label7.TabIndex = 4;
@@ -237,7 +239,7 @@
             // 
             // textBoxImja
             // 
-            this.textBoxImja.Location = new System.Drawing.Point(124, 56);
+            this.textBoxImja.Location = new System.Drawing.Point(124, 80);
             this.textBoxImja.MaxLength = 20;
             this.textBoxImja.Name = "textBoxImja";
             this.textBoxImja.Size = new System.Drawing.Size(100, 20);
@@ -246,7 +248,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(89, 59);
+            this.label6.Location = new System.Drawing.Point(89, 83);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(29, 13);
             this.label6.TabIndex = 2;
@@ -254,7 +256,7 @@
             // 
             // textBoxFam
             // 
-            this.textBoxFam.Location = new System.Drawing.Point(124, 28);
+            this.textBoxFam.Location = new System.Drawing.Point(124, 52);
             this.textBoxFam.MaxLength = 20;
             this.textBoxFam.Name = "textBoxFam";
             this.textBoxFam.Size = new System.Drawing.Size(100, 20);
@@ -263,7 +265,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(62, 31);
+            this.label5.Location = new System.Drawing.Point(62, 55);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(56, 13);
             this.label5.TabIndex = 0;
@@ -271,7 +273,7 @@
             // 
             // buttonSave
             // 
-            this.buttonSave.Location = new System.Drawing.Point(34, 291);
+            this.buttonSave.Location = new System.Drawing.Point(43, 306);
             this.buttonSave.Name = "buttonSave";
             this.buttonSave.Size = new System.Drawing.Size(75, 23);
             this.buttonSave.TabIndex = 9;
@@ -281,7 +283,7 @@
             // 
             // buttonCancel
             // 
-            this.buttonCancel.Location = new System.Drawing.Point(146, 290);
+            this.buttonCancel.Location = new System.Drawing.Point(155, 305);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(75, 23);
             this.buttonCancel.TabIndex = 10;
@@ -289,11 +291,21 @@
             this.buttonCancel.UseVisualStyleBackColor = true;
             this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
             // 
+            // checkBoxClub
+            // 
+            this.checkBoxClub.AutoSize = true;
+            this.checkBoxClub.Location = new System.Drawing.Point(124, 19);
+            this.checkBoxClub.Name = "checkBoxClub";
+            this.checkBoxClub.Size = new System.Drawing.Size(68, 17);
+            this.checkBoxClub.TabIndex = 10;
+            this.checkBoxClub.Text = "Клубная";
+            this.checkBoxClub.UseVisualStyleBackColor = true;
+            // 
             // Form_SettingsTag
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(258, 318);
+            this.ClientSize = new System.Drawing.Size(258, 340);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonSave);
             this.Controls.Add(this.groupBox1);
@@ -344,5 +356,6 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Button buttonSave;
         private System.Windows.Forms.Button buttonCancel;
+        private System.Windows.Forms.CheckBox checkBoxClub;
     }
 }
